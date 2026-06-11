@@ -12,15 +12,10 @@ body { font-family: 'Nunito', sans-serif; background: #F5ECD7; min-height: 100vh
 .globe { font-size: 3.5rem; margin-bottom: 0.5rem; }
 h1 { font-family: 'Fredoka One', cursive; font-size: 2.2rem; color: #7B5C3E; margin-bottom: 0.25rem; }
 .subtitle { font-size: 0.95rem; color: #A0856A; margin-bottom: 2rem; }
-.status-box { background: #F5ECD7; border-radius: 12px; padding: 0.75rem 1rem; font-size: 0.9rem; color: #7B5C3E; margin-bottom: 1.5rem; min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }
-.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; flex-shrink: 0; }
-.dot-green { background: #5A9E6F; }
-.dot-orange { background: #D4884A; }
-.dot-gray { background: #B4B2A9; }
+.btn-grid { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
 .join-btn { width: 100%; padding: 0.9rem 1rem; border-radius: 12px; border: none; font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #FFF8F0; background: #7B5C3E; cursor: pointer; transition: opacity 0.15s, transform 0.1s; }
-.join-btn:hover:not(:disabled) { opacity: 0.88; transform: scale(1.01); }
-.join-btn:disabled { background: #E0C9B0; color: #A0856A; cursor: not-allowed; transform: none; }
-.note { font-size: 0.8rem; color: #A0856A; margin-top: 1.25rem; line-height: 1.5; }
+.join-btn:hover { opacity: 0.88; transform: scale(1.01); }
+.note { font-size: 0.8rem; color: #A0856A; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -28,59 +23,17 @@ h1 { font-family: 'Fredoka One', cursive; font-size: 2.2rem; color: #7B5C3E; mar
   <div class="globe">🌍</div>
   <h1>Papa Jerry's World</h1>
   <p class="subtitle">A virtual world for the family</p>
-  <div class="status-box">
-    <span class="dot dot-gray" id="status-dot"></span>
-    <span id="status-text">Checking world status...</span>
+  <div class="btn-grid">
+    <button class="join-btn" onclick="joinSession(6081)">Join — Session 1</button>
+    <button class="join-btn" onclick="joinSession(6082)">Join — Session 2</button>
   </div>
-  <button class="join-btn" id="join-btn" onclick="joinWorld()" disabled>Join the World</button>
-  <p class="note" id="note-text">Please wait while we check available sessions.</p>
+  <p class="note">Each button opens its own private window. Log in with your avatar name and password.</p>
 </div>
 <script>
-const SESSIONS = [{port:6081},{port:6082},{port:6083}];
-let availableSession = null;
-function getBase(port) {
-  return 'https://' + window.location.hostname.replace(/-\d+\./, '-' + port + '.');
+function joinSession(port) {
+  var host = window.location.hostname.replace(/-\d+\./, '-' + port + '.');
+  window.open('https://' + host + '/vnc_auto.html?autoconnect=true&resize=scale', '_blank');
 }
-async function checkSession(s) {
-  try { await fetch(getBase(s.port) + '/', {method:'HEAD',mode:'no-cors'}); return true; } catch(e) { return false; }
-}
-async function checkSessions() {
-  const dot = document.getElementById('status-dot');
-  const text = document.getElementById('status-text');
-  const btn = document.getElementById('join-btn');
-  const note = document.getElementById('note-text');
-  let found = null;
-  let count = 0;
-  for (const s of SESSIONS) {
-    const alive = await checkSession(s);
-    if (alive) { count++; if (!found) found = s; }
-  }
-  if (count === 0) {
-    dot.className = 'dot dot-orange';
-    text.textContent = 'The world is offline right now.';
-    btn.disabled = true; btn.textContent = 'World Offline';
-    note.textContent = 'Please ask Papa Jerry to start up the world!';
-    availableSession = null;
-  } else if (found) {
-    dot.className = 'dot dot-green';
-    text.textContent = 'World is open — ' + count + ' of ' + SESSIONS.length + ' sessions available.';
-    btn.disabled = false; btn.textContent = 'Join the World';
-    note.textContent = 'Click to enter. You will need your avatar name and password.';
-    availableSession = found;
-  } else {
-    dot.className = 'dot dot-orange';
-    text.textContent = 'World is full — all sessions in use.';
-    btn.disabled = true; btn.textContent = 'World is Full';
-    note.textContent = 'Try again in a few minutes!';
-    availableSession = null;
-  }
-}
-function joinWorld() {
-  if (!availableSession) return;
-  window.open(getBase(availableSession.port) + '/vnc_auto.html?autoconnect=true&resize=scale', '_blank');
-}
-checkSessions();
-setInterval(checkSessions, 30000);
 </script>
 </body>
 </html>
