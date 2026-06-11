@@ -21,7 +21,7 @@ DISPLAY=$DISPLAY_ID fluxbox &
 sleep 1
 
 # Stream screen to its own VNC port
-x11vnc -display $DISPLAY_ID -nopw -listen localhost -port $VNC_PORT -forever -shared &
+x11vnc -display $DISPLAY_ID -nopw -listen localhost -rfbport $VNC_PORT -forever -shared &
 sleep 1
 
 # Bind web browser endpoint to web port
