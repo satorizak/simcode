@@ -1,0 +1,7 @@
+{
+  "forwardPorts": [6081, 6082],
+  "portsAttributes": {
+    "6081": { "label": "Session 1", "onAutoForward": "silent" },
+    "6082": { "label": "Session 2", "onAutoForward": "silent" }
+  }
+}
