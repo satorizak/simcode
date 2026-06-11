@@ -1,113 +1,141 @@
-# zrok - Secure internet sharing made simple
+# SimCode — Papa Jerry's Family Virtual World
 
-![zrok logo](docs/images/zrok_cover.png)
-
-**Share anything, anywhere, instantly. Enterprise reliability. No firewall changes. No port forwarding. No hassle.**
-
-zrok lets you securely share web services, files, and network resources with anyone—whether they're across the internet or your private network. Built on zero-trust networking, it works through firewalls and NAT without requiring any network configuration changes.
-
-## Quick start
-
-Get sharing in under 2 minutes:
-
-1. **[Install zrok](https://docs.zrok.io/docs/guides/install/)** for your platform
-2. **Get an account**: `zrok invite` (use the free [zrok.io service](https://docs.zrok.io/docs/getting-started/))
-3. **Enable sharing**: `zrok enable`
-
-That's it! Now you can share anything:
-
-```bash
-# Share a web service publicly
-$ zrok share public localhost:8080
-
-# Share files as a network drive  
-$ zrok share public --backend-mode drive ~/Documents
-
-# Share privately with other zrok users
-$ zrok share private localhost:3000
-```
-
-![zrok Web Console](docs/images/zrok_web_console.png)
-
-## What you can share
-
-### Web services
-
-Instantly make local web apps accessible over the internet:
-
-```bash
-zrok share public localhost:8080
-```
-
-![zrok share public](docs/images/zrok_share_public.png)
-
-### Files & directories
-
-Turn any folder into a shareable network drive:
-
-```bash
-zrok share public --backend-mode drive ~/Repos/zrok
-```
-
-![zrok share public -b drive](docs/images/zrok_share_public_drive.png)
-![mounted zrok drive](docs/images/zrok_share_public_drive_explorer.png)
-
-### Private resources
-
-Share TCP/UDP services securely with other zrok users—no public internet exposure.
-
-## Key features
-
-- **Zero Configuration**: Works through firewalls, NAT, and corporate networks
-- **Secure by Default**: End-to-end encryption with zero-trust architecture  
-- **Public & Private Sharing**: Share with anyone or just specific users
-- **Multiple Protocols**: HTTP/HTTPS, TCP, UDP, and file sharing
-- **Cross-Platform**: Windows, macOS, Linux, and Raspberry Pi
-- **Self-Hostable**: Run your own zrok service instance
-
-## How it works
-
-zrok is built on [OpenZiti](https://docs.openziti.io/docs/learn/introduction/), a programmable zero-trust network overlay. This means:
-
-- **No inbound connectivity required**: Works from behind firewalls and NAT
-- **End-to-end encryption**: All traffic is encrypted, even from zrok servers
-- **Peer-to-peer connections**: Direct connections between users when possible
-- **Identity-based access**: Share with specific users, not IP addresses
-
-## Developer SDK
-
-Embed zrok sharing into your applications with our Go SDK:
-
-```go
-// Create a share
-shr, err := sdk.CreateShare(root, &sdk.ShareRequest{
-    BackendMode: sdk.TcpTunnelBackendMode,
-    ShareMode:   sdk.PrivateShareMode,
-})
-
-// Accept connections
-listener, err := sdk.NewListener(shr.Token, root)
-```
-
-[Read the SDK guide](https://blog.openziti.io/the-zrok-sdk) for complete examples.
-
-## Self-hosting
-
-Run your own zrok service—from Raspberry Pi to enterprise scale:
-
-- Single binary contains everything you need
-- Scales from small personal instances to large public services
-- Built on the same codebase as the public zrok.io service
-
-[Self-Hosting Guide](https://docs.zrok.io/docs/guides/self-hosting/self_hosting_guide/)
-
-## Resources
-
-- **[Documentation](https://docs.zrok.io/)**
-- **[Office Hours Videos](https://www.youtube.com/watch?v=Edqv7yRmXb0&list=PLMUj_5fklasLuM6XiCNqwAFBuZD1t2lO2)**
-- **[Building from source](./BUILD.md)**
-- **[Contributing](./CONTRIBUTING.md)**
+A free, browser-based virtual world that runs entirely inside a GitHub Codespace. Family members connect using just a URL — no installs, no downloads required.
 
 ---
 
-*Ready to start sharing? [Get started with zrok →](https://docs.zrok.io/docs/getting-started)*
+## How It Works
+
+OpenSimulator runs as the world server inside the Codespace. Each user gets their own Singularity viewer running in a virtual desktop, streamed to their browser via noVNC. All communication stays on localhost inside the Codespace.
+
+```
+Family member's browser → Portal page → noVNC → Singularity viewer → OpenSimulator
+```
+
+---
+
+## Every Time You Start Up
+
+### Step 1 — Start OpenSim
+
+Open a terminal and run:
+
+```bash
+export DOTNET_ROOT=/usr/lib/dotnet
+export PATH=/usr/lib/dotnet:$PATH
+cd /workspaces/simcode/opensim-0.9.3.0/bin
+dotnet OpenSim.dll
+```
+
+Wait until you see:
+
+```
+Region (My Region) #
+```
+
+---
+
+### Step 2 — Launch user sessions
+
+Open a **new terminal** for each session:
+
+**Session 1:**
+```bash
+bash /workspaces/simcode/launch_user.sh 1 6081
+```
+
+**Session 2:**
+```bash
+bash /workspaces/simcode/launch_user.sh 2 6082
+```
+
+**Session 3 (optional):**
+```bash
+bash /workspaces/simcode/launch_user.sh 3 6083
+```
+
+---
+
+### Step 3 — Make ports public
+
+1. Click the **Ports tab** at the bottom of Codespaces
+2. Right-click port **6081** → Port Visibility → **Public**
+3. Right-click port **6082** → Port Visibility → **Public**
+4. Copy the URL for port **6081** — this is your portal address
+
+---
+
+### Step 4 — Copy portal to web folder
+
+```bash
+sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
+```
+
+---
+
+### Step 5 — Share the portal URL
+
+The portal address looks like:
+```
+https://your-codespace-name-6081.app.github.dev/portal.html
+```
+
+Send this link to family members. They open it in any browser and click a session button to enter the world.
+
+---
+
+## How Family Members Connect
+
+1. Open the portal URL in any browser
+2. Click **Join — Session 1** or **Join — Session 2**
+3. A new tab opens with the Singularity login screen
+4. Enter avatar first name, last name, and password
+5. Wait about 5 minutes for the world and avatars to fully load
+
+---
+
+## Adding a New Avatar Account
+
+At the OpenSim console prompt `Region (My Region) #` type:
+
+```
+create user
+```
+
+Follow the prompts to set first name, last name, and password. Accounts are saved permanently.
+
+---
+
+## Practical Limits
+
+| Sessions | Terminals needed | Notes |
+|----------|-----------------|-------|
+| 1 | 2 | OpenSim + 1 session |
+| 2 | 3 | Recommended for family use |
+| 3 | 4 | Maximum recommended |
+
+Codespaces free tier: 8GB RAM, 60 hours/month, auto-stops after 30 minutes idle.
+
+---
+
+## Files in This Repo
+
+| File | Purpose |
+|------|---------|
+| `launch_user.sh` | Launches a complete user session |
+| `portal.html` | Family portal webpage with session buttons |
+| `status.py` | Optional session status server |
+| `playit-old` | playit.gg v0.15.26 binary (kept for future use) |
+| `opensim-0.9.3.0/bin/OpenSim.ini` | Main OpenSim configuration |
+| `opensim-0.9.3.0/bin/Regions/Regions.ini` | Region configuration |
+| `opensim-0.9.3.0/bin/config-include/StandaloneCommon.ini` | Standalone grid config |
+
+---
+
+## Important Notes
+
+- Avatar accounts and world data persist between Codespace sessions
+- The portal URL changes every time the Codespace restarts
+- GitHub auto-stops a Codespace after 30 minutes of inactivity
+- GitHub deletes a Codespace after 30 days of inactivity — use it regularly!
+- Avatars take about 5 minutes to fully load due to software rendering
