@@ -32,4 +32,8 @@ sleep 1
 cd /workspaces/simcode/Singularity_1_8_9_8338_x86_64
 DISPLAY=$DISPLAY_ID ./singularity &
 
+# Update permanent portal URL
+curl -s -X POST https://fs3.just.edu.tw/~satori/1oworld/update.php \
+  -d "url=https://${CODESPACE_NAME}-6081.app.github.dev/portal.html"
+
 echo "Session $NUM ready! Open port $WEB_PORT in Codespaces Ports tab and set to Public."
