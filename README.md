@@ -4,83 +4,44 @@ A free, browser-based virtual world that runs entirely inside a GitHub Codespace
 
 ---
 
-## How It Works
-
-OpenSimulator runs as the world server inside the Codespace. Each user gets their own Singularity viewer running in a virtual desktop, streamed to their browser via noVNC. All communication stays on localhost inside the Codespace.
-
-```
-Family member's browser → Portal page → noVNC → Singularity viewer → OpenSimulator
-```
-
----
-
 ## Every Time You Start Up
 
-### Step 1 — Start OpenSim
+### Terminal 1 — Cleanup first:
+```bash
+bash /workspaces/simcode/cleanup.sh
+```
 
-Open a terminal and run:
-
+### Terminal 2 — Start OpenSim:
 ```bash
 export DOTNET_ROOT=/usr/lib/dotnet
 export PATH=/usr/lib/dotnet:$PATH
 cd /workspaces/simcode/opensim-0.9.3.0/bin
 dotnet OpenSim.dll
 ```
+Wait for `Region (My Region) #` to appear.
 
-Wait until you see:
-
-```
-Region (My Region) #
-```
-
----
-
-### Step 2 — Launch user sessions
-
-Open a **new terminal** for each session:
-
-**Session 1:**
+### Terminal 3 — Session 1:
 ```bash
 bash /workspaces/simcode/launch_user.sh 1 6081
 ```
 
-**Session 2:**
+### Terminal 4 — Session 2:
 ```bash
-bash /workspaces/simcode/launch_user.sh 2 6082
+bash /workspaces/simcode/launch_user.sh 2 8080
 ```
 
-**Session 3 (optional):**
-```bash
-bash /workspaces/simcode/launch_user.sh 3 6083
-```
-
----
-
-### Step 3 — Make ports public
-
-1. Click the **Ports tab** at the bottom of Codespaces
-2. Right-click port **6081** → Port Visibility → **Public**
-3. Right-click port **6082** → Port Visibility → **Public**
-4. Copy the URL for port **6081** — this is your portal address
-
----
-
-### Step 4 — Copy portal to web folder
-
+### Then:
+1. Ports tab → right-click **6081** → set **Public**
+2. Ports tab → right-click **8080** → set **Public**
+3. Copy portal to web folder:
 ```bash
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
-
----
-
-### Step 5 — Share the portal URL
-
-The portal address looks like:
+4. Get your portal URL from the Ports tab — copy the 6081 URL and add `/portal.html`:
 ```
 https://your-codespace-name-6081.app.github.dev/portal.html
 ```
-
-Send this link to family members. They open it in any browser and click a session button to enter the world.
+5. Share that URL with family!
 
 ---
 
@@ -94,27 +55,53 @@ Send this link to family members. They open it in any browser and click a sessio
 
 ---
 
+## OpenSim Console Commands
+
+To access the OpenSim console (running in Terminal 2):
+```bash
+tmux attach -t opensim
+```
+Press **Ctrl+B then D** to detach without stopping OpenSim.
+
+Useful console commands:
+- `create user` — add a new avatar account
+- `show users` — list logged in users
+- `alert general "message"` — send message to all users
+- `shutdown` — stop OpenSim cleanly
+
+---
+
 ## Adding a New Avatar Account
 
 At the OpenSim console prompt `Region (My Region) #` type:
-
 ```
 create user
 ```
-
-Follow the prompts to set first name, last name, and password. Accounts are saved permanently.
+Follow the prompts. Accounts are saved permanently between sessions.
 
 ---
 
 ## Practical Limits
 
-| Sessions | Terminals needed | Notes |
-|----------|-----------------|-------|
-| 1 | 2 | OpenSim + 1 session |
-| 2 | 3 | Recommended for family use |
-| 3 | 4 | Maximum recommended |
+| Sessions | Terminals | Notes |
+|----------|-----------|-------|
+| 1 | 3 | OpenSim + cleanup + 1 session |
+| 2 | 4 | Recommended for family use |
+| 3 | 5 | Maximum recommended |
 
-Codespaces free tier: 8GB RAM, 60 hours/month, auto-stops after 30 minutes idle.
+- Codespaces free tier: 8GB RAM, 60 hours/month
+- Auto-stops after 30 minutes of inactivity
+- Deleted after 30 days of inactivity — use it regularly!
+- Avatars take about 5 minutes to fully load
+
+---
+
+## Session Ports
+
+| Session | Port |
+|---------|------|
+| Session 1 | 6081 |
+| Session 2 | 8080 |
 
 ---
 
@@ -122,9 +109,9 @@ Codespaces free tier: 8GB RAM, 60 hours/month, auto-stops after 30 minutes idle.
 
 | File | Purpose |
 |------|---------|
+| `cleanup.sh` | Kills all leftover processes before startup |
 | `launch_user.sh` | Launches a complete user session |
 | `portal.html` | Family portal webpage with session buttons |
-| `status.py` | Optional session status server |
 | `playit-old` | playit.gg v0.15.26 binary (kept for future use) |
 | `opensim-0.9.3.0/bin/OpenSim.ini` | Main OpenSim configuration |
 | `opensim-0.9.3.0/bin/Regions/Regions.ini` | Region configuration |
@@ -134,8 +121,6 @@ Codespaces free tier: 8GB RAM, 60 hours/month, auto-stops after 30 minutes idle.
 
 ## Important Notes
 
-- Avatar accounts and world data persist between Codespace sessions
-- The portal URL changes every time the Codespace restarts
-- GitHub auto-stops a Codespace after 30 minutes of inactivity
-- GitHub deletes a Codespace after 30 days of inactivity — use it regularly!
-- Avatars take about 5 minutes to fully load due to software rendering
+- The portal URL changes every Codespace restart — share the new URL each time
+- Avatar accounts and world objects persist between restarts
+- Always run cleanup.sh first to avoid leftover process conflicts
