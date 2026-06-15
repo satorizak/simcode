@@ -41,13 +41,13 @@ sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
 https://your-codespace-name-6081.app.github.dev/portal.html
 ```
-5. Share that URL with family!
+5. The enter Papa Jerry's world webpage is on https://satorizak.github.io/simcode/  
 
 ---
 
 ## How Family Members Connect
 
-1. Open the portal URL in any browser
+1. Open the https://satorizak.github.io/simcode/ URL in any browser - this will open the portal
 2. Click **Join — Session 1** or **Join — Session 2**
 3. A new tab opens with the Singularity login screen
 4. Enter avatar first name, last name, and password
