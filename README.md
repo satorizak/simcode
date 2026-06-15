@@ -41,7 +41,7 @@ sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
 https://your-codespace-name-6081.app.github.dev/portal.html
 ```
-5. The enter Papa Jerry's world webpage is on https://satorizak.github.io/simcode/  
+5. Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/  
 
 ---
 
