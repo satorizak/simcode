@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papa Jerry's World</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: #F5ECD7; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.card { background: #FFF8F0; border: 1.5px solid #E0C9B0; border-radius: 24px; padding: 2.5rem 2rem; text-align: center; max-width: 420px; width: 100%; }
+.globe { font-size: 3.5rem; margin-bottom: 0.5rem; }
+h1 { font-family: 'Fredoka One', cursive; font-size: 2.2rem; color: #7B5C3E; margin-bottom: 0.25rem; }
+.subtitle { font-size: 0.95rem; color: #A0856A; margin-bottom: 2rem; }
+.join-btn { display: block; width: 100%; padding: 0.9rem 1rem; border-radius: 12px; border: none; font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #FFF8F0; background: #7B5C3E; cursor: pointer; text-decoration: none; margin-bottom: 0.75rem; transition: opacity 0.15s; }
+.join-btn:hover { opacity: 0.88; }
+.note { font-size: 0.8rem; color: #A0856A; line-height: 1.5; margin-top: 1rem; }
+#status { font-size: 0.85rem; color: #A0856A; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="globe">🌍</div>
+  <h1>Papa Jerry's World</h1>
+  <p class="subtitle">A virtual world for the family</p>
+  <a class="join-btn" id="enterBtn" href="#" target="_blank">Enter the World</a>
+  <div id="status">Checking if world is online...</div>
+  <p class="note">Click to open the world in a new tab.<br>Log in with your avatar name and password.</p>
+</div>
+
+<script>
+const PORTAL_URL = 'https://curly-barnacle-vr7vjvj5v92w47-6081.app.github.dev/portal.html';
+
+async function checkOnline() {
+  const btn = document.getElementById('enterBtn');
+  const status = document.getElementById('status');
+  btn.href = PORTAL_URL;
+  try {
+    const res = await fetch(PORTAL_URL, { mode: 'no-cors' });
+    status.textContent = '🟢 World is online!';
+  } catch(e) {
+    status.textContent = '🔴 World appears offline. Try anyway or check back later.';
+  }
+}
+checkOnline();
+</script>
+</body>
+</html>
