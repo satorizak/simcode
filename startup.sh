@@ -10,8 +10,8 @@ sleep 3
 bash /workspaces/simcode/cleanup.sh
 
 echo "▶ Step 2: Starting OpenSim in background…"
-export DOTNET_ROOT=/usr/lib/dotnet
-export PATH=/usr/lib/dotnet:$PATH
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$HOME/.dotnet:$PATH
 cd /workspaces/simcode/opensim-0.9.3.0/bin
 nohup dotnet OpenSim.dll < /dev/null > /tmp/opensim.log 2>&1 &
 
