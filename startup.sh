@@ -12,12 +12,20 @@ echo "▶ Step 2: Starting OpenSim in background…"
 export DOTNET_ROOT=/usr/lib/dotnet
 export PATH=/usr/lib/dotnet:$PATH
 cd /workspaces/simcode/opensim-0.9.3.0/bin
-dotnet OpenSim.dll > /tmp/opensim.log 2>&1 &
+nohup dotnet OpenSim.dll < /dev/null > /tmp/opensim.log 2>&1 &
 
 echo "   Waiting for region to load (may take ~60s)…"
-until grep -q "Region (My Region) #" /tmp/opensim.log; do
-  sleep 3
+WAIT=0
+until grep -q "Region (My Region) #" /tmp/opensim.log 2>/dev/null; do
+  sleep 5
+  WAIT=$((WAIT+5))
+  echo "   …still waiting (${WAIT}s)"
+  if [ $WAIT -ge 300 ]; then
+    echo "⚠ Timed out waiting for OpenSim. Check /tmp/opensim.log"
+    exit 1
+  fi
 done
+
 echo "   ✓ Region is up!"
 
 echo "▶ Step 3: Launching noVNC sessions…"
