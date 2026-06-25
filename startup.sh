@@ -4,8 +4,9 @@
 # After it finishes, set ports 6081 and 8080 to Public manually.
 
 set -e
-
 echo "▶ Step 1: Cleanup…"
+pkill -f "dotnet OpenSim.dll" 2>/dev/null || true
+sleep 3
 bash /workspaces/simcode/cleanup.sh
 
 echo "▶ Step 2: Starting OpenSim in background…"
