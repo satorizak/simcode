@@ -54,73 +54,14 @@ https://your-codespace-name-6081.app.github.dev/portal.html
 5. Wait about 5 minutes for the world and avatars to fully load
 
 ---
-
-## OpenSim Console Commands
-
-To access the OpenSim console (running in Terminal 2):
-```bash
-tmux attach -t opensim
-```
-Press **Ctrl+B then D** to detach without stopping OpenSim.
-
-Useful console commands:
-- `create user` — add a new avatar account
-- `show users` — list logged in users
-- `alert general "message"` — send message to all users
-- `shutdown` — stop OpenSim cleanly
-
----
-
-## Adding a New Avatar Account
-
-At the OpenSim console prompt `Region (My Region) #` type:
-```
-create user
-```
-Follow the prompts. Accounts are saved permanently between sessions.
-
----
-
-## Practical Limits
-
-| Sessions | Terminals | Notes |
-|----------|-----------|-------|
-| 1 | 3 | OpenSim + cleanup + 1 session |
-| 2 | 4 | Recommended for family use |
-| 3 | 5 | Maximum recommended |
-
-- Codespaces free tier: 8GB RAM, 60 hours/month
-- Auto-stops after 30 minutes of inactivity
-- Deleted after 30 days of inactivity — use it regularly!
-- Avatars take about 5 minutes to fully load
-
----
-
-## Session Ports
-
-| Session | Port |
-|---------|------|
-| Session 1 | 6081 |
-| Session 2 | 8080 |
-
----
-
-## Files in This Repo
-
-| File | Purpose |
-|------|---------|
-| `cleanup.sh` | Kills all leftover processes before startup |
-| `launch_user.sh` | Launches a complete user session |
-| `portal.html` | Family portal webpage with session buttons |
-| `playit-old` | playit.gg v0.15.26 binary (kept for future use) |
-| `opensim-0.9.3.0/bin/OpenSim.ini` | Main OpenSim configuration |
-| `opensim-0.9.3.0/bin/Regions/Regions.ini` | Region configuration |
-| `opensim-0.9.3.0/bin/config-include/StandaloneCommon.ini` | Standalone grid config |
-
----
-
-## Important Notes
-
-- The portal URL changes every Codespace restart — share the new URL each time
-- Avatar accounts and world objects persist between restarts
-- Always run cleanup.sh first to avoid leftover process conflicts
+To summarize the working startup procedure each session:
+Terminal 1:
+bashbash /workspaces/simcode/startup.sh
+Wait for Region (My Region) #
+Terminal 2:
+bashbash /workspaces/simcode/launch_user.sh 1 6081
+Terminal 3:
+bashbash /workspaces/simcode/launch_user.sh 2 8080
+Terminal 4:
+bashsudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
+Then set ports 6081 and 8080 to Public, and log in with Local Host grid in Singularity.
