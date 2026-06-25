@@ -9,6 +9,11 @@ pkill -f "dotnet OpenSim.dll" 2>/dev/null || true
 sleep 3
 bash /workspaces/simcode/cleanup.sh
 
+echo "▶ Updating Regions.ini with current IP…"
+MYIP=$(hostname -I | awk '{print $1}')
+sed -i "s/ExternalHostName = .*/ExternalHostName = $MYIP/" /workspaces/simcode/opensim-0.9.3.0/bin/Regions/Regions.ini
+echo "   IP set to $MYIP"
+
 echo "▶ Step 2: Starting OpenSim in background…"
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$HOME/.dotnet:$PATH
