@@ -1,7 +1,8 @@
 {
-  "forwardPorts": [6081, 6082],
+  "forwardPorts": [6081, 8080],
   "portsAttributes": {
     "6081": { "label": "Session 1", "onAutoForward": "silent" },
-    "6082": { "label": "Session 2", "onAutoForward": "silent" }
-  }
+    "8080": { "label": "Session 2", "onAutoForward": "silent" }
+  },
+  "postStartCommand": "bash /workspaces/simcode/startup.sh"
 }
