@@ -28,7 +28,7 @@ bash /workspaces/simcode/launch_user.sh 2 8080
 ### Next:
 1. Ports tab → right-click **6081** → set **Public**
 2. Ports tab → right-click **8080** → set **Public**
-3. ### Terminal 1 — Copy portal:
+3. **Terminal 1** — Copy portal:
 ```bash
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
