@@ -26,7 +26,7 @@ bash /workspaces/simcode/launch_user.sh 1 6081
 bash /workspaces/simcode/launch_user.sh 2 8080
 ```
 
-### Terminal 5 (or maybe Terminal 1) — Copy portal:
+### Terminal 1 — Copy portal:
 ```bash
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
