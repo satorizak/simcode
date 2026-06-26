@@ -24,6 +24,10 @@ bash /workspaces/simcode/launch_user.sh 1 6081
 ### Terminal 4 — Session 2:
 ```bash
 bash /workspaces/simcode/launch_user.sh 2 8080
+```
+
+### Terminal 4 (or any terminal) — Copy portal:
+```bash
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
 
@@ -107,3 +111,13 @@ Follow the prompts. Accounts are saved permanently between sessions.
 - Avatar accounts and world objects persist between restarts
 - Always run Terminal 1 first to avoid leftover process conflicts
 - In the Singularity login screen, always select **Local Host** as the grid
+
+---
+
+## Troubleshooting
+
+**Portal URL returns 404:**
+In the Ports tab, right-click port 6081 → Delete, then click Add Port → type 6081 → Enter, then right-click → Set Public. Try the URL again.
+
+**noVNC error on screen:**
+Press F5 to refresh the page — the session will reconnect normally.
