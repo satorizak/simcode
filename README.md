@@ -25,18 +25,14 @@ bash /workspaces/simcode/launch_user.sh 1 6081
 ```bash
 bash /workspaces/simcode/launch_user.sh 2 8080
 ```
-
+### Then:
+1. Ports tab → right-click **6081** → set **Public**
+2. Ports tab → right-click **8080** → set **Public**
+```
 ### Terminal 1 — Copy portal:
 ```bash
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
-
-### Then:
-1. Ports tab → right-click **6081** → set **Public**
-2. Ports tab → right-click **8080** → set **Public**
-3. Get your portal URL from the Ports tab — copy the 6081 URL and add `/portal.html`:
-```
-https://your-codespace-name-6081.app.github.dev/portal.html
 ```
 4. Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/
 
