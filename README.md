@@ -121,3 +121,8 @@ In the Ports tab, right-click port 6081 → Delete, then click Add Port → type
 
 **noVNC error on screen:**
 Press F5 to refresh the page — the session will reconnect normally.
+
+**Git push rejected:**
+```bash
+git stash && git pull --rebase && git push --no-verify && git stash pop
+```
