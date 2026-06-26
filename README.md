@@ -33,7 +33,7 @@ bash /workspaces/simcode/launch_user.sh 2 8080
 sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
 ```
 
-### 4. Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/
+###  Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/
 
 ---
 
