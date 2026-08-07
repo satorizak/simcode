@@ -37,6 +37,9 @@ for i in $(seq 1 60); do
   sleep 2
 done
 
+echo "[start_all] Restoring portal.html into novnc web root..."
+sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
+
 echo "[start_all] Launching viewer sessions..."
 setsid nohup bash /workspaces/simcode/launch_user.sh 1 6081 > "$LOGDIR/session1.log" 2>&1 < /dev/null &
 disown
