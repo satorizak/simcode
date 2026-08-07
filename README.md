@@ -5,33 +5,11 @@ A free, browser-based virtual world that runs entirely inside a GitHub Codespace
 
 ## Every Time You Start Up
 
-### Terminal 1 — Fix IP, then Cleanup:
-```bash
-MYIP=$(hostname -I | awk '{print $1}') && sed -i "s/ExternalHostName = .*/ExternalHostName = $MYIP/" /workspaces/simcode/opensim-0.9.3.0/bin/Regions/Regions.ini && bash /workspaces/simcode/cleanup.sh
-```
+everything should just start automatically
 
-### Terminal 2 — Start OpenSim:
-```bash
-export DOTNET_ROOT=$HOME/.dotnet && export PATH=$HOME/.dotnet:$PATH && cd /workspaces/simcode/opensim-0.9.3.0/bin && dotnet OpenSim.dll
-```
-Wait for `Region (My Region) #` to appear.
-
-### Terminal 3 — Session 1:
-```bash
-bash /workspaces/simcode/launch_user.sh 1 6081
-```
-
-### Terminal 4 — Session 2:
-```bash
-bash /workspaces/simcode/launch_user.sh 2 8080
-```
 ### Next:
 1. Ports tab → right-click **6081** → set **Public**
 2. Ports tab → right-click **8080** → set **Public**
-3. **Terminal 1** — Copy portal:
-```bash
-sudo cp /workspaces/simcode/portal.html /usr/share/novnc/portal.html
-```
 
 ###  Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/
 
