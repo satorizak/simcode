@@ -46,3 +46,12 @@ disown
 sleep 5
 
 echo "[start_all] Done. Logs in $LOGDIR — ports 6081 and 8080 should be reachable shortly."
+
+if [ -n "${CODESPACE_NAME:-}" ]; then
+  echo "[start_all] Current Codespace name: $CODESPACE_NAME"
+  echo "[start_all] Portal URL: https://${CODESPACE_NAME}-6081.app.github.dev/portal.html"
+  echo "[start_all] If this differs from the GitHub Pages portal (satorizak.github.io/simcode),"
+  echo "[start_all] update CODESPACE_NAME in index.html to match."
+else
+  echo "[start_all] CODESPACE_NAME not set — could not print portal URL."
+fi
