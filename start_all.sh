@@ -20,8 +20,9 @@ sed -i "s/ExternalHostName = .*/ExternalHostName = $MYIP/" \
 
 echo "[start_all] Starting OpenSim..."
 cd /workspaces/simcode/opensim-0.9.3.0/bin
-nohup dotnet OpenSim.dll > "$LOGDIR/opensim.log" 2>&1 &
-echo "[start_all] OpenSim PID $! — logging to $LOGDIR/opensim.log"
+setsid nohup dotnet OpenSim.dll > "$LOGDIR/opensim.log" 2>&1 < /dev/null &
+disown
+echo "[start_all] OpenSim launched — logging to $LOGDIR/opensim.log"
 
 echo "[start_all] Waiting for OpenSim's HTTP server (port 9000)..."
 for i in $(seq 1 60); do
@@ -37,7 +38,11 @@ for i in $(seq 1 60); do
 done
 
 echo "[start_all] Launching viewer sessions..."
-nohup bash /workspaces/simcode/launch_user.sh 1 6081 > "$LOGDIR/session1.log" 2>&1 &
-nohup bash /workspaces/simcode/launch_user.sh 2 8080 > "$LOGDIR/session2.log" 2>&1 &
+setsid nohup bash /workspaces/simcode/launch_user.sh 1 6081 > "$LOGDIR/session1.log" 2>&1 < /dev/null &
+disown
+setsid nohup bash /workspaces/simcode/launch_user.sh 2 8080 > "$LOGDIR/session2.log" 2>&1 < /dev/null &
+disown
+
+sleep 5
 
 echo "[start_all] Done. Logs in $LOGDIR — ports 6081 and 8080 should be reachable shortly."
