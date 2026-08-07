@@ -27,9 +27,11 @@ h1 { font-family: 'Fredoka One', cursive; font-size: 2.2rem; color: #7B5C3E; mar
   <div id="status">Checking if world is online...</div>
   <p class="note">Click to open the world in a new tab.<br>Log in with your avatar name and password.</p>
 </div>
-
 <script>
-const PORTAL_URL = 'https://curly-barnacle-vr7vjvj5v92w47-6081.app.github.dev/portal.html';
+// Update CODESPACE_NAME here whenever the Codespace is renamed/recreated
+// (check the new name by running: echo $CODESPACE_NAME  inside the Codespace)
+const CODESPACE_NAME = 'organic-succotash-rpp7wjxpxp92p75x';
+const PORTAL_URL = 'https://' + CODESPACE_NAME + '-6081.app.github.dev/portal.html';
 
 async function checkOnline() {
   const btn = document.getElementById('enterBtn');
