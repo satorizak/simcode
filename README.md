@@ -11,10 +11,6 @@ everything should just start automatically
 1. Ports tab → right-click **6081** → set **Public**
 2. Ports tab → right-click **8080** → set **Public**
 
-###  Then enter Papa Jerry's world webpage on https://satorizak.github.io/simcode/
-
----
-
 ## How Family Members Connect
 1. Open https://satorizak.github.io/simcode/ in any browser — this will open the portal
 2. Click **Join — Session 1** or **Join — Session 2**
@@ -26,21 +22,13 @@ everything should just start automatically
 ---
 
 ## OpenSim Console Commands
-The OpenSim console is running live in Terminal 2. Just click on it and type commands at the `Region (My Region) #` prompt:
+1. pkill -f "dotnet OpenSim" — stops the backgrounded instance from start_all.sh so there's no conflict
+2. cd /workspaces/simcode/opensim-0.9.3.0/bin && dotnet OpenSim.dll — runs it in the foreground, giving you the interactive console
+Do your create user / save oar / load oar work at the console prompt
+shutdown — clean graceful shutdown, flushes everything to OpenSim.db
+3. bash /workspaces/simcode/start_all.sh — brings the full automated stack back up (fresh OpenSim instance, both viewer sessions, portal.html restored, everything)
 
-- `create user` — add a new avatar account
-- `show users` — list logged in users
-- `alert general "message"` — send message to all users
-- `shutdown` — stop OpenSim cleanly
-
----
-
-## Adding a New Avatar Account
-At the OpenSim console prompt `Region (My Region) #` type:
-```
-create user
-```
-Follow the prompts. Accounts are saved permanently between sessions.
+One small note on step 5: start_all.sh already does its own cleanup (pkill on all the relevant processes) as its first step, so it's safe to run even though you already killed OpenSim manually — no conflict there.
 
 ---
 
@@ -79,23 +67,6 @@ Follow the prompts. Accounts are saved permanently between sessions.
 ---
 
 ## Important Notes
-- The portal URL changes every Codespace restart — share the new URL each time
-- The IP fix in Terminal 1 is required every restart — the Codespace gets a new internal IP each time
 - Avatar accounts and world objects persist between restarts
-- Always run Terminal 1 first to avoid leftover process conflicts
 - In the Singularity login screen, always select **Local Host** as the grid
 
----
-
-## Troubleshooting
-
-**Portal URL returns 404:**
-In the Ports tab, right-click port 6081 → Delete, then click Add Port → type 6081 → Enter, then right-click → Set Public. Try the URL again.
-
-**noVNC error on screen:**
-Press F5 to refresh the page — the session will reconnect normally.
-
-**Git push rejected:**
-```bash
-git stash && git pull --rebase && git push --no-verify && git stash pop
-```
