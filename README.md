@@ -5,7 +5,7 @@ A free, browser-based virtual world that runs entirely inside a GitHub Codespace
 
 ## Every Time You Start Up
 
-everything should just start automatically
+Start the Codespace and everything should just start automatically
 if you want to see what is happening, click - ctrl shift p ,and choose, Codespaces: View Creation Log
 
 ### Next:
