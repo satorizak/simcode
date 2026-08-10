@@ -5,8 +5,8 @@ A free, browser-based virtual world that runs entirely inside a GitHub Codespace
 
 ## Every Time You Start Up
 
-Start the Codespace and everything should just start automatically
-if you want to see what is happening, click - ctrl shift p ,and choose, Codespaces: View Creation Log
+Start the Codespace and everything should just start automatically. 
+If you want to see what is happening, click - ctrl shift p ,and choose, Codespaces: View Creation Log
 
 ### Next:
 1. Ports tab → right-click **6081** → set **Public**
